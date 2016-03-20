@@ -16,7 +16,7 @@ And then if you change sass file in `static/sass` folder. Hugo's live reload wil
 To install this theme you should clone this repository to your hugo's theme folder:
 
 ```
-git clone theme/hugo-ls
+git clone https://github.com/eliseealex/hugo-lis
 ```
 
 ## What's next?
@@ -26,8 +26,8 @@ git clone theme/hugo-ls
 - Google analytics.
 - Social share buttons.
 - Dynomize system.
-- Upload first version.	
 - Make lovely list.
 — Add twitter call to action.
 - Add footer.
 - Attribute for factoid (for example margin-left -100px;).
+- Table of contents?
