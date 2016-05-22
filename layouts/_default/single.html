@@ -1,4 +1,16 @@
-    {{ partial "header.html" . }}
+    {{ partial "header-start.html" . }}
+
+        <title>{{ .Title }}. Шаг {{ .Params.step }} &middot; {{ .Site.Title }}</title>
+
+        <meta name="description" content="{{ .Description }}">
+        <meta name="author" content="{{ .Params.author }}">
+        <meta name="keywords" content="{{ .Params.metakeywords }}">
+
+        <link href="{{ .Node.RSSlink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+        <link href="{{ .Node.RSSlink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
+
+    {{ partial "header-end.html" . }}
+
     <body>
         <header class="article-head">
             <div class="main-title">
@@ -8,21 +20,64 @@
 
         <section id="wrapper">
             <div class="container">
-                <div class="col-md-offset-2 col-md-8">
-                    <article class="post">
+                <article class="post">
+                    <div class="col-md-offset-2 col-md-7">
                         <header>
-                            <h4>Шаг {{ .Params.step }}</h4>
-                            <h1>{{ .Title }}</h1>
-                            <h3>{{ .Description }}</h3>
+                            {{ if .Params.step }}
+                              Шаг {{ .Params.step }}
+                            {{ end }}
+                            <h1>{{ .Title | markdownify}}</h1>
+                            <h3>{{ .Description | markdownify }}</h3>
                         </header>
+
+                        {{ if .Site.Params.enableTableOfContent }}
+                        <div class="table-of-content">
+                            <h3>Оглавление</h3>
+                            {{ .TableOfContents }}
+                        </div>
+                        {{ end }}
+                    </div>
+
+                    <div class="col-md-offset-2 col-md-7 post-body">
+
+                        {{ if and .Site.Params.enablePath .Params.sidebarhistory }}
+                            <div class="factoid">
+                                {{ range where .Site.Pages.ByDate "Section" .Section }}
+                                     <p>Шаг {{ .Params.step }} <br><a href="{{ .Permalink }}">{{ .Title }}</a></p>
+                                {{ end }}
+
+                                <p style="margin-top: 2em"><a href="/{{ .Section }}"><i class="fa fa-map-signs"></i> Дорожная карта</a></p>
+                            </div>
+                        {{ end }}
+
                         <section id="post-body">
+
+                            {{ if .Params.projectroadmap }}
+                            <div class="blog-info">
+                            Для создания продуктов я использую короткие итерации.<br>
+                            Я называю их <b>экспериментами</b>.<br>
+                            Об одном из таких экспериментов я рассказываю в этой секции.<br>
+                            </div>
+                            {{ end }}
+
+
                             {{ .Content }}
                         </section>
-                    </article>
-                </div>
+
+                        {{ if .Params.projectroadmap }}
+                          <div class="factoid factoid-top">
+                            {{ range where .Site.Pages.ByDate "Section" .Params.projectroadmap }}
+                                Шаг {{ .Params.step }}<br>
+                                <strong><a href="{{ .Permalink }}">{{ .Title }}</a></strong>
+                                <p>{{ .Description }}</p><br>
+                            {{ end }}
+                          </div>
+                        {{ end }}
+                    </div>
+                </article>
+                {{ partial "article-footer.html" . }}
+                {{ partial "analytic.html" . }}
             </div>
         </section>
-        
-        {{ partial "footer.html" . }}
     </body>
 </html>

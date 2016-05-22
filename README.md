@@ -20,14 +20,14 @@ git clone https://github.com/eliseealex/hugo-lis
 ```
 
 ## What's next?
-- Add seo meta tags.
-- RSS.
+- Path is ugly in small screens.
+- Make special steps.
+- Add link on description.
+- RSS on project.
+- 404.
 - Create a good guidelines based on definitions.
-- Google analytics.
 - Social share buttons.
 - Dynomize system.
-- Make lovely list.
-— Add twitter call to action.
-- Add footer.
 - Attribute for factoid (for example margin-left -100px;).
-- Table of contents?
+- Add github, hypothesis and roadmap link on index.
+- Make components for index page constructor.

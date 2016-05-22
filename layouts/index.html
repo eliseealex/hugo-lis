@@ -1,6 +1,18 @@
-	{{ partial "header.html" . }}
+	{{ partial "header-start.html" . }}
+
+        <title>{{ .Site.Params.mainsubtitle }} &middot; {{ .Site.Params.maintitle }}</title>
+
+        <meta name="keywords" content="{{ .Site.Params.metaKeywords }}">
+        <meta name="description" content="{{ with .Site.Params.description | markdownify }}{{ . }}{{ end }}">
+        <meta name="author" content="{{ with .Site.Params.author }}{{ . }}{{ end }}">
+
+        <link href="{{ .RSSlink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+        <link href="{{ .RSSlink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
+
+    {{ partial "header-end.html" . }}
+
 	<body>
-        <header class="main-head" style="">
+        <header class="main-head">
             <div class="main-title">
                 <h1>{{ .Site.Params.maintitle }}</h1>
                 <h2>{{ .Site.Params.mainsubtitle | markdownify }}</h2>
@@ -11,14 +23,16 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 experiment-title">
-                        <h4>Эксперимент</h4>
-                        <h2>Создание блога</h2>
+                        <h4> </h4>
+                        <h2><a href="/lispress">Создание блога</a></h2>
                     </div>
-                    <div class="col-xs-6 col-md-2 experiment-step">
-                        <p>Шаг 1</p>
-                        <h4><a href="/project/lispress/1-hypothesis/">Гипотезы</a></h4>
-                        <p>Для чего нужна ещё одна платформа для блогов?</p>
-                    </div>
+                    {{ range first 4 (where .Data.Pages "Section" "lispress") }}
+                        <div class="col-xs-6 col-md-2 experiment-step">
+                            <p>Шаг {{ .Params.step }}</p>
+                            <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+                            <p>{{ .Description }}</p>
+                        </div>
+                    {{ end }}
                 </div>
             </div>
         </div>
@@ -29,13 +43,13 @@
                     <div class="col-md-4">
                         <h2>Любимые книги</h2>
                     </div>
-                    <div class="col-xs-6 col-md-3 book">
+                    <div class="col-xs-6 col-md-4 book">
                         <img src="image/loer-zhizn.jpg">
                         <p>Жизнь на полной мощности</p>
                         <p><small>Джим Лоэр и Тони Шварц</small></p>
                         <p><small><a href="http://www.mann-ivanov-ferber.ru/">Манн, Иванов и Фербер</a>, 2016</small></p>
                     </div>
-                    <div class="col-xs-6 col-md-3 book">
+                    <div class="col-xs-6 col-md-4 book">
                         <img src="image/ries-lean-startup.jpg">
                         <p>Бизнес с нуля</p>
                         <p><small>Эрик Рис</small></p>
@@ -45,24 +59,41 @@
             </div>
         </div>
 
-        <div class="rubric">
+        <div class="experiment">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <h2>Кто мы такие?</h2>
+                    <div class="col-md-4 experiment-title">
+                        <h4> </h4>
+                        <h2><strike><a href="/hackday-41">Hackay 41</a></strike> Failed</h2>
                     </div>
-                    <div class="col-sm-5">
-                        <p>
-                            {{ .Site.Params.description }}
-                        </p>
-                    </div>
-                    <div class="col-sm-3">
-                        <h2>Автор</h2>
-                        <p>{{ .Site.Params.author }}</p>
-                    </div>
+                    {{ range first 3 (where .Data.Pages "Section" "hackday-41") }}
+                        <div class="col-xs-6 col-md-2 experiment-step">
+                            <p>Шаг {{ .Params.step }}</p>
+                            <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+                            <p>{{ .Description }}</p>
+                        </div>
+                    {{ end }}
                 </div>
             </div>
         </div>
-        {{ partial "footer.html" . }}
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <h2>Куда я попал?</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>
+                            {{ .Site.Params.description | markdownify}}
+                            {{ partial "social" . }}
+                        </p>
+                    </div>
+
+                </div>
+             </div>
+        </footer>
+
+        {{ partial "analytic.html" . }}
     </body>
 </html>
